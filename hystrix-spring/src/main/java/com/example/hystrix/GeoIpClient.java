@@ -17,27 +17,27 @@ public class GeoIpClient {
 		groupKey = "GeoIp",
 		commandKey = "GetDetails",
 		fallbackMethod = "getFallback",
-		threadPoolKey = "GeoIp",		
+		threadPoolKey = "GeoIp",
 		commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000"),
-            @HystrixProperty(name = "metrics.healthSnapshot.intervalInMilliseconds", value = "1000"),
-            @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "20000"),
-            @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000")
+			@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000"),
+			@HystrixProperty(name = "metrics.healthSnapshot.intervalInMilliseconds", value = "1000"),
+			@HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "20000"),
+			@HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000")
 		},
 		threadPoolProperties = {
 			@HystrixProperty(name = "coreSize", value = "4"),
 			@HystrixProperty(name = "maxQueueSize", value = "100")
 		}
-    )
+	)
 	public GeoIpDetails getDetails(final String host) {
 		return restTemplate.getForObject(
 			UriComponentsBuilder
 				.fromHttpUrl("http://freegeoip.net/{format}/{host}")
 				.buildAndExpand("json", host)
-				.toUri(), 
+				.toUri(),
 			GeoIpDetails.class);
 	}
-	
+
 	public GeoIpDetails getFallback(final String host) {
 		return new GeoIpDetails();
 	}

@@ -26,26 +26,26 @@ public class GeoIpApplication {
 	@Bean
 	RestTemplate restTemplate() {
 		final SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-		
+
 		factory.setConnectTimeout(1000);
 		factory.setReadTimeout(3000);
-		
+
 		return new RestTemplate(factory);
 	}
-	
+
 	@PostConstruct
 	public void init() {
 		HystrixPlugins.getInstance().registerMetricsPublisher(
 			HystrixServoMetricsPublisher.getInstance());
 	}
-	
+
 	@Bean
 	ServletRegistrationBean hystrixMetricsStreamServlet() {
-		return new ServletRegistrationBean(new HystrixMetricsStreamServlet(), 
+		return new ServletRegistrationBean(new HystrixMetricsStreamServlet(),
 			"/hystrix.stream");
 	}
-	
+
 	public static void main(String[] args) throws IOException {
-		SpringApplication.run(GeoIpApplication.class, args);		
+		SpringApplication.run(GeoIpApplication.class, args);
 	}
 }
