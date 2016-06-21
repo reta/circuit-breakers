@@ -26,7 +26,7 @@ public class GeoIpClient {
 		},
 		threadPoolProperties = {
 			@HystrixProperty(name = "coreSize", value = "4"),
-			@HystrixProperty(name = "maxQueueSize", value = "100")
+			@HystrixProperty(name = "maxQueueSize", value = "10")
 		}
 	)
 	public GeoIpDetails getDetails(final String host) {
